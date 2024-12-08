@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eaf7f9;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            width: 100%;
+            background-color: #008b8b; /* Bluish-green color */
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .navbar .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .logo-container img {
+            width: 40px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .navbar .logo-container span {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        /* Container Styling */
+        .container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 100px auto; /* Prevent overlap with navbar */
+            text-align: center;
+        }
+
+        /* Heading Styling */
+        h1 {
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: #0073e6;
+        }
+
+        /* Input Fields */
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #0073e6;
+            box-shadow: 0 0 8px rgba(0, 115, 230, 0.5);
+        }
+
+        input::placeholder {
+            color: #aaa;
+        }
+
+        /* Button Styling */
+        .button {
+            padding: 12px;
+            width: 100%;
+            background-color: #0073e6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #005bb5;
+        }
+
+        /* Flash Messages Styling */
+        .message {
+            color: green;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .error {
+            color: red;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        /* Link Styling */
+        p {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        .register-link {
+            color: #0073e6;
+            text-decoration: none;
+        }
+
+        .register-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Media Query for smaller screens */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+
+            .navbar .logo-container span {
+                font-size: 1rem;
+            }
+
+            .navbar .logo-container img {
+                width: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo-container">
+            <img src="../static/images/image.png" th:src="@{images/image.png}" alt="Graduedu Logo">
+            <span>CourseConnect</span>
+        </div>
+    </div>
+
+    <!-- Login Form Container -->
+    <div class="container">
+        <h1>Login</h1>
+        
+        <!-- Flash Messages -->
+        <div th:if="${message}" class="message">
+            <p th:text="${message}"></p>
+        </div>
+        <div th:if="${error}" class="error">
+            <p th:text="${error}"></p>
+        </div>
+
+        <form action="/login" method="post">
+            <input type="text" name="id" placeholder="Enter your name" required>
+            <input type="password" name="password" placeholder="Enter your Password" required>
+            <button type="submit" class="button">Login</button>
+        </form>
+
+        <p>Don't have an account? <a href="/signup" class="register-link">SignUp</a></p>
+    </div>
+</body>
+</html>

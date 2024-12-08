@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Feedback Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .feedback-display {
+            margin-top: 30px;
+        }
+        .feedback-card {
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .feedback-card h4 {
+            margin-top: 0;
+            color: #333;
+        }
+        .subject {
+            font-weight: bold;
+        }
+        .feedback-text {
+            margin-top: 5px;
+        }
+        .anonymous {
+            font-size: 14px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Faculty Feedback</h1>
+
+    <!-- Display Feedback -->
+    <div class="feedback-display" id="feedback-display">
+        <h3>Feedback for Faculty:</h3>
+        <!-- Anonymous Feedback Cards will be displayed here -->
+    </div>
+</div>
+
+<script>
+    // Sample feedback data
+    const feedbackData = [
+        { subject: 'Mathematics', feedback: 'Great explanation of concepts, very clear!', studentId: 'Anonymous123' },
+        { subject: 'Physics', feedback: 'Needs to improve the pace of teaching, sometimes hard to follow.', studentId: 'Anonymous456' },
+        { subject: 'Computer Science', feedback: 'Excellent teaching methods and examples, very engaging.', studentId: 'Anonymous789' },
+    ];
+
+    // Function to display feedback
+    function displayFeedback() {
+        const feedbackDisplay = document.getElementById('feedback-display');
+
+        feedbackData.forEach(feedback => {
+            const feedbackCard = document.createElement('div');
+            feedbackCard.classList.add('feedback-card');
+            feedbackCard.innerHTML = `
+                <h4>Feedback for <span class="subject">${feedback.subject}</span></h4>
+                <p class="feedback-text">${feedback.feedback}</p>
+                <p class="anonymous">Feedback given by: ${feedback.studentId}</p>
+            `;
+            feedbackDisplay.appendChild(feedbackCard);
+        });
+    }
+
+    // Call the function to display the feedback
+    displayFeedback();
+</script>
+
+</body>
+</html>

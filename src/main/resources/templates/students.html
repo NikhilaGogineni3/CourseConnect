@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Records Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        td {
+            background-color: #f9f9f9;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .action-btns {
+            text-align: center;
+        }
+        .btn {
+            padding: 8px 12px;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .delete-btn {
+            background-color: #f44336;
+        }
+        .delete-btn:hover {
+            background-color: #e53935;
+        }
+        .edit-form, .add-form {
+            display: none;
+            margin-top: 20px;
+        }
+        .edit-form input, .add-form input {
+            padding: 8px;
+            margin: 5px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .edit-form button, .add-form button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .edit-form button:hover, .add-form button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Student Records</h1>
+    
+    <!-- Table to display student records -->
+    <table>
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Name</th>
+                <th>Course</th>
+                <th>Year</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="student-table">
+            <!-- Example student data -->
+            <tr id="student-1">
+                <td>1</td>
+                <td id="name-1">John Doe</td>
+                <td id="course-1">Computer Science</td>
+                <td id="year-1">3rd Year</td>
+                <td class="action-btns">
+                    <button class="btn" onclick="editRecord(1)">Edit</button>
+                    <button class="delete-btn btn" onclick="deleteRecord(1)">Delete</button>
+                </td>
+            </tr>
+            <tr id="student-2">
+                <td>2</td>
+                <td id="name-2">Jane Smith</td>
+                <td id="course-2">Electrical Engineering</td>
+                <td id="year-2">2nd Year</td>
+                <td class="action-btns">
+                    <button class="btn" onclick="editRecord(2)">Edit</button>
+                    <button class="delete-btn btn" onclick="deleteRecord(2)">Delete</button>
+                </td>
+            </tr>
+            <tr id="student-3">
+                <td>3</td>
+                <td id="name-3">Alice Brown</td>
+                <td id="course-3">Mechanical Engineering</td>
+                <td id="year-3">4th Year</td>
+                <td class="action-btns">
+                    <button class="btn" onclick="editRecord(3)">Edit</button>
+                    <button class="delete-btn btn" onclick="deleteRecord(3)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Add New Record Button -->
+    <div class="action-btns">
+        <button class="btn" onclick="showAddForm()">Add New Student</button>
+    </div>
+
+    <!-- Add Student Form -->
+    <div class="add-form" id="add-form">
+        <h3>Add New Student</h3>
+        <label for="add-name">Name:</label>
+        <input type="text" id="add-name" placeholder="Enter student name">
+        <label for="add-course">Course:</label>
+        <input type="text" id="add-course" placeholder="Enter student course">
+        <label for="add-year">Year:</label>
+        <input type="text" id="add-year" placeholder="Enter student year">
+        <button onclick="addStudent()">Add Student</button>
+        <button onclick="cancelAdd()">Cancel</button>
+    </div>
+
+    <!-- Edit Form -->
+    <div class="edit-form" id="edit-form">
+        <h3>Edit Student Record</h3>
+        <label for="edit-name">Name:</label>
+        <input type="text" id="edit-name" placeholder="Enter student name">
+        <label for="edit-course">Course:</label>
+        <input type="text" id="edit-course" placeholder="Enter student course">
+        <label for="edit-year">Year:</label>
+        <input type="text" id="edit-year" placeholder="Enter student year">
+        <button onclick="saveRecord()">Save</button>
+        <button onclick="cancelEdit()">Cancel</button>
+    </div>
+</div>
+
+<script>
+    let currentStudentId = null;
+
+    // Show Add New Student Form
+    function showAddForm() {
+        document.getElementById('add-form').style.display = 'block';
+    }
+
+    // Cancel Add New Student Form
+    function cancelAdd() {
+        document.getElementById('add-form').style.display = 'none';
+    }
+
+    // Add New Student
+    function addStudent() {
+        const name = document.getElementById('add-name').value;
+        const course = document.getElementById('add-course').value;
+        const year = document.getElementById('add-year').value;
+
+        // Create a new student row
+        const studentId = Date.now(); // Unique ID based on timestamp
+        const newRow = `<tr id="student-${studentId}">
+            <td>${studentId}</td>
+            <td id="name-${studentId}">${name}</td>
+            <td id="course-${studentId}">${course}</td>
+            <td id="year-${studentId}">${year}</td>
+            <td class="action-btns">
+                <button class="btn" onclick="editRecord(${studentId})">Edit</button>
+                <button class="delete-btn btn" onclick="deleteRecord(${studentId})">Delete</button>
+            </td>
+        </tr>`;
+
+        // Add the new row to the table
+        document.getElementById('student-table').insertAdjacentHTML('beforeend', newRow);
+
+        // Reset and hide the form
+        cancelAdd();
+    }
+
+    // Edit Record
+    function editRecord(studentId) {
+        currentStudentId = studentId;
+
+        // Pre-fill the form with the current student data
+        document.getElementById('edit-name').value = document.getElementById('name-' + studentId).innerText;
+        document.getElementById('edit-course').value = document.getElementById('course-' + studentId).innerText;
+        document.getElementById('edit-year').value = document.getElementById('year-' + studentId).innerText;
+
+        // Show the edit form
+        document.getElementById('edit-form').style.display = 'block';
+    }
+
+    // Save Edited Record
+    function saveRecord() {
+        const name = document.getElementById('edit-name').value;
+        const course = document.getElementById('edit-course').value;
+        const year = document.getElementById('edit-year').value;
+
+        // Update the table with the new values
+        document.getElementById('name-' + currentStudentId).innerText = name;
+        document.getElementById('course-' + currentStudentId).innerText = course;
+        document.getElementById('year-' + currentStudentId).innerText = year;
+
+        // Hide the edit form after saving
+        cancelEdit();
+    }
+
+    // Cancel Edit Form
+    function cancelEdit() {
+        document.getElementById('edit-form').style.display = 'none';
+    }
+
+    // Delete Record
+    function deleteRecord(studentId) {
+        const confirmDelete = confirm('Are you sure you want to delete this record?');
+        if (confirmDelete) {
+            // Remove the row from the table
+            document.getElementById('student-' + studentId).remove();
+        }
+    }
+</script>
+
+</body>
+</html>

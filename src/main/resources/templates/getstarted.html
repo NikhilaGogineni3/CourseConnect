@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CourseConnect - Get Started</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f0f4f8;
+    }
+
+    .header {
+      background-color: #0d4e56;
+      color: #c8e7e3;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 36px;
+    }
+
+    .content {
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 32px;
+      color: #2d3852;
+      margin-bottom: 20px;
+      border-bottom: 3px solid #3d85c6;
+      display: inline-block;
+      padding-bottom: 10px;
+    }
+
+    .section-description {
+      font-size: 18px;
+      color: #5a6178;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    /* Cards Section */
+    .cards-container {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 30%;
+      padding: 20px;
+      margin: 10px;
+      text-align: center;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+    }
+
+    .card img {
+      max-width: 60px;
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+      color: #3d85c6;
+    }
+
+    .card p {
+      font-size: 16px;
+      color: #5a6178;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #0d4e56;
+      color: #c8e7e3;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+      clear: both;
+    }
+
+    footer a {
+      color: #c8e7e3;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Section -->
+  <div class="header">
+    <h1>Welcome to CourseConnect</h1>
+  </div>
+
+  <!-- Main Content Section -->
+  <div class="content">
+    <!-- About Us Section -->
+    <section id="about-us">
+      <h2 class="section-title">About Us</h2>
+      <p class="section-description">
+        At CourseConnect, we aim to simplify your academic journey by providing easy access to courses, flexible scheduling, and personalized recommendations. Our mission is to make education more accessible, organized, and tailored to your needs.
+      </p>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+      <h2 class="section-title">Our Features</h2>
+      <p class="section-description">
+        Our platform offers a variety of features designed to help you succeed:
+      </p>
+
+      <!-- Cards Display -->
+      <div class="cards-container">
+        <div class="card">
+			<img src="../static/images/search.png" th:src="@{images/search.png}" alt="Easy Search" style="width: 300px; height: auto;">
+          <h3>Easy Course Search</h3>
+          <p>Quickly find courses that match your interests and academic goals.</p>
+        </div>
+        <div class="card">
+          <img src="../static/images/handshake.png" th:src="@{images/handshake.png}" alt="Handshake">
+          <h3>Flexible Scheduling</h3>
+          <p>Choose classes and schedules that fit your lifestyle and commitments.</p>
+        </div>
+        <div class="card">
+          <img src="../static/images/personalised.png" th:src="@{images/personalised.png}" alt="Personalised">
+          <h3>Personalized Recommendations</h3>
+          <p>Get course suggestions based on your preferences and academic history.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Get Started Section -->
+    <section id="get-started">
+      <h2 class="section-title">Get Started Today</h2>
+      <p class="section-description">
+        Begin your educational journey with CourseConnect by signing up today!
+      </p>
+      <a href="/signup">Signup</a>
+    </section>
+
+    <!-- Help Section -->
+    <section id="help">
+      <h2 class="section-title">Need Help?</h2>
+      <p class="section-description">
+        If you have any questions or need assistance, we're here to help! You can reach out to us anytime, and we'll be happy to assist you.
+      </p>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section id="contact-us">
+      <h2 class="section-title">Contact Us</h2>
+      <p class="section-description">
+        For inquiries, support, or feedback, feel free to get in touch with us. We’re available via email and social media.
+      </p>
+      <p class="section-description">
+        <strong>Email:</strong> <a href="mailto:support@courseconnect.com">support@courseconnect.com</a>
+      </p>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2023 CourseConnect. All Rights Reserved.</p>
+    <p><a href="/privacy-policy">Privacy Policy</a> | <a href="/terms-of-service">Terms of Service</a></p>
+  </footer>
+
+</body>
+</html>

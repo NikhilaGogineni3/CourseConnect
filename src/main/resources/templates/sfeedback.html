@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Feedback Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .feedback-form, .feedback-display {
+            margin-top: 30px;
+        }
+        .feedback-form input, .feedback-form select, .feedback-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .feedback-form button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .feedback-form button:hover {
+            background-color: #45a049;
+        }
+        .feedback-display {
+            margin-top: 20px;
+        }
+        .feedback-card {
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .feedback-card h4 {
+            margin-top: 0;
+            color: #333;
+        }
+        .subject {
+            font-weight: bold;
+        }
+        .feedback-text {
+            margin-top: 5px;
+        }
+
+        /* Confirmation message styling */
+        .confirmation-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Student Feedback</h1>
+
+    <!-- Feedback Form -->
+    <div class="feedback-form">
+        <h3>Submit Your Feedback</h3>
+        <label for="subject">Subject:</label>
+        <select id="subject">
+            <option value="Mathematics">Mathematics</option>
+            <option value="Physics">Physics</option>
+            <option value="Chemistry">Chemistry</option>
+            <option value="Biology">Biology</option>
+            <option value="Computer Science">Computer Science</option>
+        </select>
+
+        <label for="feedback">Your Feedback:</label>
+        <textarea id="feedback" rows="4" placeholder="Enter your feedback here"></textarea>
+
+        <button onclick="submitFeedback()">Submit Feedback</button>
+    </div>
+
+    <!-- Display feedback -->
+    <div class="feedback-display" id="feedback-display"></div>
+</div>
+
+<script>
+    function submitFeedback() {
+        // Get values from form
+        const subject = document.getElementById('subject').value;
+        const feedback = document.getElementById('feedback').value;
+
+        // Check if feedback is empty
+        if (feedback.trim() === "") {
+            alert("Please enter feedback before submitting.");
+            return;
+        }
+
+        // Create feedback card element
+        const feedbackCard = document.createElement('div');
+        feedbackCard.classList.add('feedback-card');
+
+        // Add content to the feedback card
+        feedbackCard.innerHTML = `
+            <h4>Feedback for <span class="subject">${subject}</span></h4>
+            <p class="feedback-text">${feedback}</p>
+        `;
+
+        // Add the new feedback card to the display area
+        document.getElementById('feedback-display').appendChild(feedbackCard);
+
+        // Clear the form fields
+        document.getElementById('subject').value = 'Mathematics';
+        document.getElementById('feedback').value = '';
+
+        // Display a confirmation message
+        const confirmationMessage = document.createElement('div');
+        confirmationMessage.classList.add('confirmation-message');
+        confirmationMessage.innerHTML = `<p>Thank you for your feedback on ${subject}!</p>`;
+        document.body.appendChild(confirmationMessage);
+
+        // Automatically remove the confirmation message after 3 seconds
+        setTimeout(() => {
+            confirmationMessage.remove();
+        }, 3000);
+    }
+</script>
+
+</body>
+</html>

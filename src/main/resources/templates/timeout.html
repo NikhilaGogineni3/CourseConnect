@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session Timeout Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .content {
+            display: none; /* Initially hidden, will show after login */
+        }
+        .login {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login">
+        <h1>Please Login</h1>
+        <button onclick="login()">Login</button>
+    </div>
+
+    <div class="content">
+        <h1>Welcome, You are logged in!</h1>
+        <p>Your session will expire in 2 minutes if you don't interact.</p>
+    </div>
+
+    <script>
+        let sessionTimeout;
+        let sessionDuration = 15; // 2 minutes (in milliseconds)
+
+        // Simulate login action
+        function login() {
+            // Save login time to localStorage
+            localStorage.setItem('loginTime', Date.now());
+            document.querySelector('.login').style.display = 'none';
+            document.querySelector('.content').style.display = 'block';
+            
+            // Start session timeout timer
+            startSessionTimer();
+        }
+
+        function startSessionTimer() {
+            // Clear any previous session timeout
+            clearTimeout(sessionTimeout);
+
+            // Set session timeout
+            sessionTimeout = setTimeout(logout, sessionDuration);
+
+            // Check for user activity to reset the session
+            window.addEventListener('mousemove', resetSession);
+            window.addEventListener('keydown', resetSession);
+        }
+
+        function resetSession() {
+            // Reset session timer on user activity
+            clearTimeout(sessionTimeout);
+            sessionTimeout = setTimeout(logout, sessionDuration);
+        }
+
+        function logout() {
+            alert("Your session has expired due to inactivity. Please log in again.");
+            localStorage.removeItem('loginTime');
+            document.querySelector('.login').style.display = 'block';
+            document.querySelector('.content').style.display = 'none';
+        }
+
+        // Check if user is already logged in
+        if (localStorage.getItem('loginTime')) {
+            let elapsedTime = Date.now() - localStorage.getItem('loginTime');
+            if (elapsedTime < sessionDuration) {
+                document.querySelector('.login').style.display = 'none';
+                document.querySelector('.content').style.display = 'block';
+                startSessionTimer();
+            } else {
+                localStorage.removeItem('loginTime'); // Session expired
+            }
+        }
+    </script>
+
+</body>
+</html>

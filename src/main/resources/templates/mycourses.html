@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <style>
+        /* Resetting margin and padding */
+        body, h1, h2, p {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* Header Styling */
+        .header {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+        }
+
+        /* Container for content */
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        /* Styling for courses list */
+        .course-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .course-item {
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            padding: 20px;
+            width: 48%;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .course-item:hover {
+            transform: translateY(-10px);
+        }
+
+        /* Course title and details styling */
+        .course-item h3 {
+            color: #007bff;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .course-item p {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive for smaller screens */
+        @media (max-width: 768px) {
+            .course-item {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Student Dashboard</h1>
+    </div>
+
+    <div class="container">
+        <h2>Registered Courses</h2>
+
+        <div class="course-list">
+            <!-- Course 1 -->
+            <div class="course-item">
+                <h3>Introduction to Programming</h3>
+                <p><strong>Instructor:</strong> John Doe</p>
+                <p><strong>Credits:</strong> 3</p>
+                <p><strong>Course Duration:</strong> 12 weeks</p>
+                <p><strong>Details:</strong> This course will teach the fundamentals of programming in various languages like Python, C, and Java.</p>
+            </div>
+
+            <!-- Course 2 -->
+            <div class="course-item">
+                <h3>Data Structures and Algorithms</h3>
+                <p><strong>Instructor:</strong> Jane Smith</p>
+                <p><strong>Credits:</strong> 4</p>
+                <p><strong>Course Duration:</strong> 16 weeks</p>
+                <p><strong>Details:</strong> This course covers essential data structures such as arrays, linked lists, trees, and sorting algorithms.</p>
+            </div>
+
+            <!-- Course 3 -->
+            <div class="course-item">
+                <h3>Machine Learning</h3>
+                <p><strong>Instructor:</strong> Dr. Alice Brown</p>
+                <p><strong>Credits:</strong> 3</p>
+                <p><strong>Course Duration:</strong> 10 weeks</p>
+                <p><strong>Details:</strong> Learn the fundamentals of machine learning and its application in real-world problems using Python.</p>
+            </div>
+
+            <!-- Course 4 -->
+            <div class="course-item">
+                <h3>Web Development</h3>
+                <p><strong>Instructor:</strong> Michael Green</p>
+                <p><strong>Credits:</strong> 3</p>
+                <p><strong>Course Duration:</strong> 14 weeks</p>
+                <p><strong>Details:</strong> Learn how to build dynamic websites using HTML, CSS, JavaScript, and back-end frameworks like Node.js and Django.</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

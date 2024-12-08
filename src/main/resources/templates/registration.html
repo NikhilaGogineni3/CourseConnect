@@ -1,0 +1,268 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Registration</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        .header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        h1, h3 {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background: #fff;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        label {
+            display: block;
+            margin: 1rem 0 0.5rem;
+            font-weight: bold;
+        }
+
+        select, button {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .course-item, .faculty-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .course-item label, .faculty-item label {
+            margin: 0;
+            flex: 1;
+        }
+
+        input[type="checkbox"], select {
+            flex: 0.4;
+        }
+
+        .timetable {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #e9f7ff;
+            border: 1px solid #007bff;
+            border-radius: 10px;
+        }
+
+        .timetable h3 {
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .timetable-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .timetable-table th, .timetable-table td {
+            border: 1px solid #ddd;
+            text-align: center;
+            padding: 0.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+
+            button, select {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Course Registration</h1>
+    </div>
+
+    <div class="container">
+        <label for="year">Select Year:</label>
+        <select id="year" onchange="loadDepartments()">
+            <option value="" disabled selected>Choose Year</option>
+            <option value="1">1st Year</option>
+            <option value="2">2nd Year</option>
+            <option value="3">3rd Year</option>
+            <option value="4">4th Year</option>
+        </select>
+
+        <div id="departmentSelection" style="display: none;">
+            <label for="department">Select Department:</label>
+            <select id="department" onchange="loadCourses()">
+                <option value="" disabled selected>Choose Department</option>
+                <option value="cse">Computer Science</option>
+                <option value="ece">Electronics and Communication</option>
+                <option value="mech">Mechanical Engineering</option>
+            </select>
+        </div>
+
+        <div id="specializationSelection" style="display: none;">
+            <label for="specialization">Select Specialization:</label>
+            <select id="specialization" onchange="loadCourses()">
+                <option value="" disabled selected>Choose Specialization</option>
+                <option value="ai">Artificial Intelligence</option>
+                <option value="ml">Machine Learning</option>
+                <option value="blockchain">Blockchain</option>
+            </select>
+        </div>
+
+        <div id="courseSelection" style="display: none;">
+            <h3>Select Courses:</h3>
+            <div class="course-list" id="courseList"></div>
+        </div>
+
+        <div id="facultySelection" style="display: none;">
+            <h3>Select Faculty for Each Course:</h3>
+            <div class="faculty-list" id="facultyList"></div>
+        </div>
+
+        <button id="completeRegistration" style="display: none;" onclick="generateTimetable()">
+            Complete Registration
+        </button>
+
+        <div id="timetable" class="timetable" style="display: none;">
+            <h3>Generated Timetable</h3>
+            <table class="timetable-table">
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>9:00 AM - 10:00 AM</th>
+                        <th>10:15 AM - 11:15 AM</th>
+                        <th>11:30 AM - 12:30 PM</th>
+                        <th>1:30 PM - 2:30 PM</th>
+                        <th>2:45 PM - 3:45 PM</th>
+                    </tr>
+                </thead>
+                <tbody id="timetableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const courses = {
+            1: { cse: ["Mathematics", "C Language", "Data Structures"], ece: ["Electronics Basics", "Physics"], mech: ["Mechanics", "Physics"] },
+            2: { cse: ["DBMS", "Algorithms", "Operating Systems"], ece: ["Microcontrollers", "Signal Processing"], mech: ["Thermodynamics", "Fluid Mechanics"] },
+            3: { cse: ["Enterprise Programming", "Java FullStack Development"], ece: ["VLSI Design", "Antenna Theory"], mech: ["Machine Design", "Heat Transfer"] },
+            4: { cse: ["Physics", "CRT Training"], ece: ["Embedded Systems", "Advanced Signal Processing"], mech: ["Robotics", "Advanced Thermodynamics"] },
+        };
+
+        let selectedCourses = [];
+
+        function loadDepartments() {
+            const year = document.getElementById("year").value;
+            document.getElementById("departmentSelection").style.display = "block";
+            document.getElementById("specializationSelection").style.display = year > 2 ? "block" : "none";
+        }
+
+        function loadCourses() {
+            const year = document.getElementById("year").value;
+            const department = document.getElementById("department").value;
+
+            if (!department) return;
+
+            document.getElementById("courseSelection").style.display = "block";
+            const courseList = document.getElementById("courseList");
+            courseList.innerHTML = "";
+
+            selectedCourses = [];
+            courses[year][department].forEach(course => {
+                const div = document.createElement("div");
+                div.classList.add("course-item");
+
+                const label = document.createElement("label");
+                label.textContent = course;
+
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.value = course;
+                checkbox.onchange = () => handleCourseSelection(course, checkbox.checked);
+
+                div.appendChild(label);
+                div.appendChild(checkbox);
+                courseList.appendChild(div);
+            });
+        }
+
+        function handleCourseSelection(course, isSelected) {
+            if (isSelected) selectedCourses.push(course);
+            else selectedCourses = selectedCourses.filter(c => c !== course);
+
+            document.getElementById("completeRegistration").style.display = selectedCourses.length ? "block" : "none";
+        }
+
+        function generateTimetable() {
+            if (!selectedCourses.length) {
+                alert("Please select at least one course!");
+                return;
+            }
+
+            const timetable = document.getElementById("timetable");
+            const timetableBody = document.getElementById("timetableBody");
+            timetable.style.display = "block";
+            timetableBody.innerHTML = "";
+
+            const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+            const timeSlots = 5;
+            let courseIndex = 0;
+
+            days.forEach(day => {
+                const row = document.createElement("tr");
+
+                const dayCell = document.createElement("td");
+                dayCell.textContent = day;
+                row.appendChild(dayCell);
+
+                for (let i = 0; i < timeSlots; i++) {
+                    const cell = document.createElement("td");
+                    cell.textContent = selectedCourses[courseIndex % selectedCourses.length];
+                    courseIndex++;
+                    row.appendChild(cell);
+                }
+
+                timetableBody.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>
